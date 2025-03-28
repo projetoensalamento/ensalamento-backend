@@ -11,11 +11,41 @@ import java.util.List;
 
 @Service
 public class SalaServiceImpl implements SalaService {
+    @Override
+    public List<SalaDTO> getAll() {
+        return List.of();
+    }
+
+    @Override
+    public SalaDTO save(SalaDTO sala) {
+        return null;
+    }
+
+    @Override
+    public SalaDTO findById(long id) {
+        return null;
+    }
+
+    @Override
+    public SalaDTO update(Long id, SalaDTO sala) {
+        return null;
+    }
+
+    @Override
+    public Sala findSalaById(long id) {
+        return null;
+    }
+
+    @Override
+    public void delete(long id) {
+
+    }
+
     @Autowired
     private SalaRepository salaRepository;
 
-    @Override
-    public List<Sala> getAll() {
+    /*@Override
+    public List<SalaDTO> getAll() {
         return salaRepository.findAll();
     }
 
@@ -59,5 +89,5 @@ public class SalaServiceImpl implements SalaService {
             return resultado.get();
         }
         return new Sala();
-    }
+    }*/
 }

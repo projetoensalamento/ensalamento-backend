@@ -8,11 +8,13 @@ import br.univille.projetohotelpracachorro.entity.ensalamento.Sala;
 import java.util.List;
 
 public interface SalaService {
-    List<Sala> getAll();
+    List<SalaDTO> getAll();
 
-    Sala save(SalaDTO reserva);
+    SalaDTO save(SalaDTO sala);
 
     SalaDTO findById(long id);
+
+    SalaDTO update(Long id, SalaDTO sala);
 
     Sala findSalaById(long id);
 

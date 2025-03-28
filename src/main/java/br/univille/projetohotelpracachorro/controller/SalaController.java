@@ -1,54 +1,53 @@
 package br.univille.projetohotelpracachorro.controller;
 
-import br.univille.projetohotelpracachorro.dto.ReservaDTO;
 import br.univille.projetohotelpracachorro.dto.SalaDTO;
-import br.univille.projetohotelpracachorro.entity.Cachorro;
-import br.univille.projetohotelpracachorro.entity.Reserva;
-import br.univille.projetohotelpracachorro.entity.ensalamento.Sala;
 import br.univille.projetohotelpracachorro.service.SalaService;
-import br.univille.projetohotelpracachorro.service.impl.SalaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import java.util.List;
 
-@Controller
-@RequestMapping("/ensalamento")
+@RestController
+@RequestMapping("/api/ensalamento")
 public class SalaController {
+
     @Autowired
-    private SalaServiceImpl salaService;
+    private SalaService salaService;
 
     @GetMapping
-    public ModelAndView index(){
-        var listaSalas = salaService.getAll();
-
-        return new ModelAndView("sala/index", "listaSalas", listaSalas);
+    public ResponseEntity<List<SalaDTO>> getAllSalas() {
+        List<SalaDTO> listaSalas = salaService.getAll();
+        return ResponseEntity.ok(listaSalas);
     }
 
-    @GetMapping("/novo")
-    public ModelAndView novo(){
-        var novaSala = new SalaDTO();
-        return new ModelAndView("sala/form", "sala", novaSala);
-
+    @GetMapping("/{id}")
+    public ResponseEntity<SalaDTO> getSalaById(@PathVariable("id") Long id) {
+        var sala = salaService.findById(id);
+        if (sala == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(sala);
     }
 
-    @GetMapping("/alterar/{id}")
-    public ModelAndView alterar(@PathVariable("id") int id){
-        var umaSala = salaService.findById(id);
-
-        return new ModelAndView("sala/form", "sala", umaSala);
+    @PostMapping
+    public ResponseEntity<SalaDTO> createSala(@RequestBody SalaDTO salaDTO) {
+        var novaSala = salaService.save(salaDTO);
+        return ResponseEntity.ok(novaSala);
     }
 
-    @GetMapping("/delete/{id}")
-    public ModelAndView delete(@PathVariable("id") int id){
+    @PutMapping("/{id}")
+    public ResponseEntity<SalaDTO> updateSala(@PathVariable("id") Long id, @RequestBody SalaDTO salaDTO) {
+        var salaAtualizada = salaService.update(id, salaDTO);
+        if (salaAtualizada == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(salaAtualizada);
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSala(@PathVariable("id") int id) {
         salaService.delete(id);
-
-        return new ModelAndView("redirect:/ensalamento");
+        return ResponseEntity.noContent().build();
     }
-
 }
