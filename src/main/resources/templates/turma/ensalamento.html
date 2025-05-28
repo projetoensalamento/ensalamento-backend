@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Grade Horária - [[${turma.nome}]]</title>
+    <head th:include="layout :: head"></head>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<h1 class="titulo-grade">Grade Horária da Turma <span th:text="${turma.nome}">Turma</span></h1>
+<div class="tabela-container">
+<table>
+    <thead>
+    <tr>
+        <th>Dia da Semana</th>
+        <th>1º Horário</th>
+        <th>2º Horário</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="linha : ${gradeHoraria}">
+        <td class="dia-semana">
+    <span th:switch="${linha.diaSemana}">
+        <span th:case="${T(java.time.DayOfWeek).MONDAY}">Segunda-feira</span>
+        <span th:case="${T(java.time.DayOfWeek).TUESDAY}">Terça-feira</span>
+        <span th:case="${T(java.time.DayOfWeek).WEDNESDAY}">Quarta-feira</span>
+        <span th:case="${T(java.time.DayOfWeek).THURSDAY}">Quinta-feira</span>
+        <span th:case="${T(java.time.DayOfWeek).FRIDAY}">Sexta-feira</span>
+        <span th:case="${T(java.time.DayOfWeek).SATURDAY}">Sábado</span>
+    </span>
+        </td>
+
+        <td th:if="${linha.horario1 != null}">
+            <div><strong th:text="${linha.horario1.materia}">Matéria</strong></div>
+            <div th:text="${linha.horario1.professor}">Professor</div>
+            <div th:text="${linha.horario1.horario}">Horário</div>
+        </td>
+        <td th:if="${linha.horario1 == null}" class="vazio">Sem aula</td>
+
+        <td th:if="${linha.horario2 != null}">
+            <div><strong th:text="${linha.horario2.materia}">Matéria</strong></div>
+            <div th:text="${linha.horario2.professor}">Professor</div>
+            <div th:text="${linha.horario2.horario}">Horário</div>
+        </td>
+        <td th:if="${linha.horario2 == null}" class="vazio">Sem aula</td>
+    </tr>
+    </tbody>
+</table>
+</div>
+</body>
+</html>

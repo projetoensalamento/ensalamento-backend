@@ -1,7 +1,5 @@
 package br.univille.projetohotelpracachorro;
 
-import java.io.Console;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -13,10 +11,6 @@ import br.univille.projetohotelpracachorro.entity.Funcionario;
 import br.univille.projetohotelpracachorro.entity.Papel;
 import br.univille.projetohotelpracachorro.entity.Servico;
 import br.univille.projetohotelpracachorro.entity.Usuario;
-import br.univille.projetohotelpracachorro.repository.CachorroRepository;
-import br.univille.projetohotelpracachorro.repository.FuncionarioRepository;
-import br.univille.projetohotelpracachorro.repository.ServicoRepository;
-import br.univille.projetohotelpracachorro.repository.UsuarioRepository;
 
 @Component
 public class Startup {
