@@ -1,11 +1,11 @@
 package br.univille.projetohotelpracachorro.controller;
 
-import br.univille.projetohotelpracachorro.dto.ensalamento.ProfessorRequest;
-import br.univille.projetohotelpracachorro.dto.ensalamento.ProfessorResponse;
-import br.univille.projetohotelpracachorro.entity.ensalamento.Aula;
-import br.univille.projetohotelpracachorro.entity.ensalamento.Professor;
-import br.univille.projetohotelpracachorro.service.ensalamento.AulaService;
-import br.univille.projetohotelpracachorro.service.ensalamento.ProfessorService;
+import br.univille.projetohotelpracachorro.dto.request.ProfessorRequest;
+import br.univille.projetohotelpracachorro.dto.response.ProfessorResponse;
+import br.univille.projetohotelpracachorro.entity.Aula;
+import br.univille.projetohotelpracachorro.entity.Professor;
+import br.univille.projetohotelpracachorro.service.AulaService;
+import br.univille.projetohotelpracachorro.service.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +32,9 @@ public class ProfessorController {
     @GetMapping
     public ModelAndView listaProfessores() {
         List<ProfessorResponse> listaProfessores = professorService.findAll();
-        ModelAndView mv = new ModelAndView("ensalamento/index");
+        ModelAndView mv = new ModelAndView("professores/index");
         mv.addObject("listaProfessores", listaProfessores);
+        mv.addObject("professorRequest", new ProfessorRequest());
         return mv;
     }
 

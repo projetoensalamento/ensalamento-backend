@@ -1,11 +1,11 @@
 package br.univille.projetohotelpracachorro.controller;
 
-import br.univille.projetohotelpracachorro.dto.ensalamento.CursoRequest;
-import br.univille.projetohotelpracachorro.dto.ensalamento.CursoResponse;
-import br.univille.projetohotelpracachorro.entity.ensalamento.Curso;
-import br.univille.projetohotelpracachorro.entity.ensalamento.Materia;
-import br.univille.projetohotelpracachorro.service.ensalamento.CursoService;
-import br.univille.projetohotelpracachorro.service.ensalamento.MateriaService;
+import br.univille.projetohotelpracachorro.dto.request.CursoRequest;
+import br.univille.projetohotelpracachorro.dto.response.CursoResponse;
+import br.univille.projetohotelpracachorro.entity.Curso;
+import br.univille.projetohotelpracachorro.entity.Materia;
+import br.univille.projetohotelpracachorro.service.CursoService;
+import br.univille.projetohotelpracachorro.service.MateriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

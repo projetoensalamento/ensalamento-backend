@@ -1,0 +1,115 @@
+/* list.css - Estilo com tons de verde escuro */
+
+:root {
+    --primary-dark-green: #004d40;
+    --secondary-green: #26a69a;
+    --light-green: #4db6ac;
+    --text-light: #ffffff;
+    --text-dark: #333333;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --empty-slot-bg: #f8f9fa;
+    --hover-bg: #e0f2f1;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--empty-slot-bg);
+    margin: 0;
+    padding: 20px;
+    color: var(--text-dark);
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: var(--primary-dark-green);
+}
+
+hr {
+    margin: 20px 0;
+    border: 1px solid var(--border-color);
+}
+
+.alert {
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.alert-info {
+    background-color: var(--hover-bg);
+    color: var(--primary-dark-green);
+    border: 1px solid var(--secondary-green);
+}
+
+/* Tabela */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table thead {
+    background-color: var(--primary-dark-green);
+    color: var(--text-light);
+}
+
+.table th, .table td {
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.table-striped tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+.table-striped tbody tr:hover {
+    background-color: var(--hover-bg);
+}
+
+/* Botões */
+.btn-group {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-sm {
+    padding: 4px 10px;
+    font-size: 13px;
+}
+
+.btn-warning {
+    background-color: var(--secondary-green);
+    color: var(--text-light);
+}
+
+.btn-warning:hover {
+    background-color: #208e82;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: var(--text-light);
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}

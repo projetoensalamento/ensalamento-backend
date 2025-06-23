@@ -1,12 +1,13 @@
 package br.univille.projetohotelpracachorro.service;
 
-import br.univille.projetohotelpracachorro.dto.ensalamento.CursoRequest;
-import br.univille.projetohotelpracachorro.dto.ensalamento.CursoResponse;
-import br.univille.projetohotelpracachorro.entity.ensalamento.Curso;
-import br.univille.projetohotelpracachorro.repository.ensalamento.CursoRepository;
+import br.univille.projetohotelpracachorro.dto.request.CursoRequest;
+import br.univille.projetohotelpracachorro.dto.response.CursoResponse;
+import br.univille.projetohotelpracachorro.entity.Curso;
+import br.univille.projetohotelpracachorro.repository.CursoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CursoService {
@@ -32,7 +33,7 @@ public class CursoService {
         return cursoRepository.findAll()
                 .stream()
                 .map(CursoResponse::new)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public Curso findById(Long id){

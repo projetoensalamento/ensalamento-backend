@@ -1,0 +1,170 @@
+
+/* Cores Verde Escuro */
+:root {
+    --primary-dark-green: #004d40; /* Verde escuro principal */
+    --secondary-green: #26a69a;   /* Verde mais claro para acentos */
+    --light-green: #4db6ac;      /* Verde ainda mais claro */
+    --text-light: #ffffff;       /* Texto claro */
+    --text-dark: #333333;        /* Texto escuro */
+    --border-color: rgba(0, 0, 0, 0.1); /* Borda padrão */
+    --empty-slot-bg: #f8f9fa;    /* Fundo para slot vazio */
+    --filled-slot-bg: #e0f2f1;   /* Fundo para slot preenchido (verde muito claro) */
+}
+
+body {
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-dark);
+}
+
+.container {
+    max-width: 1200px;
+}
+
+/* Tabela Principal */
+.table {
+    width: 100%;
+    border-collapse: collapse; /* Para bordas de célula únicas */
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para o estilo "flutuante" do Excel */
+}
+
+.table th, .table td {
+    border: 1px solid var(--border-color); /* Borda como Excel */
+    padding: 0; /* Remove padding padrão para controlar internamente */
+    text-align: center;
+    vertical-align: top; /* Alinha o conteúdo ao topo da célula */
+    min-width: 120px; /* Largura mínima para células */
+    height: 150px; /* Altura fixa para células (ajuste conforme necessário) */
+}
+
+/* Cabeçalho da Tabela */
+.table thead th {
+    background-color: var(--primary-dark-green);
+    color: var(--text-light);
+    font-weight: bold;
+    padding: 12px 8px;
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+.table thead th:first-child {
+    background-color: var(--primary-dark-green); /* Mantém o canto superior esquerdo verde escuro */
+}
+
+/* Células de Dados (Horários e Aulas) */
+.table tbody th { /* Cabeçalho das linhas (horários) */
+    background-color: var(--light-green);
+    color: var(--text-dark);
+    font-weight: bold;
+    padding: 10px 5px;
+    font-size: 0.85em;
+}
+
+.table tbody td {
+    padding: 0; /* Controlado internamente */
+    background-color: var(--empty-slot-bg); /* Fundo padrão para slots vazios */
+    transition: background-color 0.3s ease;
+}
+
+.table tbody td:hover {
+    background-color: #e9ecef; /* Um leve hover para interatividade */
+}
+
+/* Conteúdo dentro da célula (slot de tempo) */
+.slot-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Espaço entre info e botões */
+    height: 100%; /* Ocupa toda a altura da célula */
+    padding: 8px; /* Padding interno da célula */
+}
+
+.aula-info {
+    flex-grow: 1; /* Ocupa espaço disponível */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centraliza verticalmente o conteúdo da aula */
+    border: 1px solid var(--secondary-green); /* Borda interna para cada aula */
+    background-color: var(--filled-slot-bg); /* Fundo para slots com aula */
+    padding: 5px;
+    margin-bottom: 5px; /* Espaço antes dos botões */
+    border-radius: 4px;
+}
+
+.info-line {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    margin-bottom: 2px; /* Espaço entre as linhas de informação */
+    font-size: 0.9em;
+    word-break: break-word; /* Quebra palavras longas */
+}
+
+.info-line .label {
+    font-weight: bold;
+    color: var(--primary-dark-green);
+    margin-right: 5px;
+}
+
+.info-line .value {
+    color: var(--text-dark);
+}
+
+.empty-slot-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #888;
+    font-style: italic;
+}
+
+/* Botões */
+.action-buttons {
+    display: flex;
+    justify-content: center; /* Centraliza os botões */
+    flex-wrap: wrap; /* Permite que os botões quebrem a linha se houver muitos */
+    gap: 5px; /* Espaço entre os botões */
+    margin-top: auto; /* Empurra os botões para o fundo da célula */
+}
+
+.btn {
+    font-size: 0.8em;
+    padding: 4px 8px;
+    white-space: nowrap; /* Evita que o texto do botão quebre */
+    border-radius: 20px
+}
+
+.btn-info {
+    background-color: var(--secondary-green);
+    border-color: var(--secondary-green);
+    color: var(--text-light);
+}
+.btn-info:hover {
+    background-color: #208e82; /* Tonalidade um pouco mais escura no hover */
+    border-color: #208e82;
+}
+
+.btn-success {
+    background-color: #28a745; /* Bootstrap default green */
+    border-color: #28a745;
+}
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.btn-danger {
+    background-color: #dc3545; /* Bootstrap default red */
+    border-color: #dc3545;
+}
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* Mensagens Flash */
+.alert {
+    margin-top: 20px;
+}

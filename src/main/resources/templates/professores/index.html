@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Professores</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { padding: 20px; }
+    .container { max-width: 900px; }
+    .table th, .table td { vertical-align: middle; }
+    .btn-group .btn { margin-right: 5px; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1 class="mb-4">Professores</h1>
+
+  <div class="card mb-4">
+    <div class="card-header">
+      <h2>Novo Professor</h2>
+    </div>
+    <div class="card-body">
+      <form th:action="@{/professores}" method="post" th:object="${professorRequest}">
+        <div class="form-group">
+          <label for="nome">Nome:</label>
+          <input type="text" class="form-control" id="nome" name="nome" th:field="*{nome}" placeholder="Nome do Professor" required minlength="3" maxlength="70">
+          <small th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="text-danger"></small>
+        </div>
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+      </form>
+    </div>
+  </div>
+
+  <hr>
+
+  <h2 class="mb-3">Lista de Professores Cadastrados</h2>
+  <div th:if="${#lists.isEmpty(listaProfessores)}" class="alert alert-info" role="alert">
+    Nenhum professor cadastrado.
+  </div>
+  <div th:unless="${#lists.isEmpty(listaProfessores)}">
+    <table class="table table-striped table-bordered">
+      <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Ações</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="professor : ${listaProfessores}">
+        <td th:text="${professor.id}"></td>
+        <td th:text="${professor.nome}"></td>
+        <td>
+          <div class="btn-group" role="group">
+            <a th:href="@{/professores/{id}(id=${professor.id})}" class="btn btn-info btn-sm">Ver Detalhes</a>
+            <a th:href="@{/professores/editar/{id}(id=${professor.id})}" class="btn btn-warning btn-sm">Editar</a>
+            <form th:action="@{/professores/{id}(id=${professor.id})}" method="post" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir este professor?');">
+              <input type="hidden" name="_method" value="delete" />
+              <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

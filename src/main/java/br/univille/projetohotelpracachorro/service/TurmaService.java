@@ -1,15 +1,16 @@
 package br.univille.projetohotelpracachorro.service;
 
-import br.univille.projetohotelpracachorro.dto.ensalamento.TurmaRequest;
-import br.univille.projetohotelpracachorro.dto.ensalamento.TurmaResponse;
-import br.univille.projetohotelpracachorro.entity.ensalamento.Curso;
-import br.univille.projetohotelpracachorro.entity.ensalamento.Turma;
-import br.univille.projetohotelpracachorro.repository.ensalamento.CursoRepository;
-import br.univille.projetohotelpracachorro.repository.ensalamento.TurmaRepository;
+import br.univille.projetohotelpracachorro.dto.request.TurmaRequest;
+import br.univille.projetohotelpracachorro.dto.response.TurmaResponse;
+import br.univille.projetohotelpracachorro.entity.Curso;
+import br.univille.projetohotelpracachorro.entity.Turma;
+import br.univille.projetohotelpracachorro.repository.CursoRepository;
+import br.univille.projetohotelpracachorro.repository.TurmaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +28,7 @@ public class TurmaService {
         return turmaRepository.findAll()
                 .stream()
                 .map(TurmaResponse::new)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public Turma criar(TurmaRequest turmaRequest) {

@@ -1,5 +1,6 @@
 package br.univille.projetohotelpracachorro.entity;
 
+import jakarta.persistence.*;
 import lombok.Data;
 
 
@@ -10,7 +11,7 @@ public class Aula {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int numero;
+    private String sala;
 
     @ManyToOne
     @JoinColumn(name = "professor_id")

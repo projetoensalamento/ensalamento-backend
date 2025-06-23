@@ -1,29 +1,15 @@
 package br.univille.projetohotelpracachorro.controller;
 
-import org.apache.catalina.User;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-
 @Controller
 public class LoginController {
-
     @GetMapping("/login")
-    public String login() {
-
-        User user = getPrincipal();
-        if (user != null) {
-
-            return "home";
-        }
-        return "login/index";
+    public String showMyLoginPage() {
+        // Retorna o nome do template Thymeleaf (sem a extensão .html)
+        // O Spring Boot e o Thymeleaf vão procurar por src/main/resources/templates/login.html
+        return "login";
     }
 
-    private User getPrincipal() {
-        User user = null;
-        if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof User) {
-            user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        }
-        return user;
-    }
 }

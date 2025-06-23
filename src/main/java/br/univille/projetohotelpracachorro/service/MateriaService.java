@@ -1,15 +1,16 @@
 package br.univille.projetohotelpracachorro.service;
 
-import br.univille.projetohotelpracachorro.dto.ensalamento.MateriaRequest;
-import br.univille.projetohotelpracachorro.dto.ensalamento.MateriaResponse;
-import br.univille.projetohotelpracachorro.entity.ensalamento.Curso;
-import br.univille.projetohotelpracachorro.entity.ensalamento.Materia;
-import br.univille.projetohotelpracachorro.repository.ensalamento.CursoRepository;
-import br.univille.projetohotelpracachorro.repository.ensalamento.MateriaRepository;
+import br.univille.projetohotelpracachorro.dto.request.MateriaRequest;
+import br.univille.projetohotelpracachorro.dto.response.MateriaResponse;
+import br.univille.projetohotelpracachorro.entity.Curso;
+import br.univille.projetohotelpracachorro.entity.Materia;
+import br.univille.projetohotelpracachorro.repository.CursoRepository;
+import br.univille.projetohotelpracachorro.repository.MateriaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -32,7 +33,7 @@ public class MateriaService {
         return materiaRepository.findAll()
                 .stream()
                 .map(MateriaResponse::new)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public Materia criaMateria(MateriaRequest materiaRequest){

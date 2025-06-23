@@ -1,12 +1,13 @@
 package br.univille.projetohotelpracachorro.service;
 
-import br.univille.projetohotelpracachorro.dto.ensalamento.ProfessorRequest;
-import br.univille.projetohotelpracachorro.dto.ensalamento.ProfessorResponse;
-import br.univille.projetohotelpracachorro.entity.ensalamento.Professor;
-import br.univille.projetohotelpracachorro.repository.ensalamento.ProfessorRepository;
+import br.univille.projetohotelpracachorro.dto.request.ProfessorRequest;
+import br.univille.projetohotelpracachorro.dto.response.ProfessorResponse;
+import br.univille.projetohotelpracachorro.entity.Professor;
+import br.univille.projetohotelpracachorro.repository.ProfessorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProfessorService {
@@ -31,7 +32,7 @@ public class ProfessorService {
         return professorRepository.findAll()
                 .stream()
                 .map(ProfessorResponse::new)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public Professor findById(Long id){

@@ -1,6 +1,6 @@
-package br.univille.projetohotelpracachorro.dto;
+package br.univille.projetohotelpracachorro.dto.response;
 
-import br.univille.projetohotelpracachorro.entity.ensalamento.Materia;
+import br.univille.projetohotelpracachorro.entity.Materia;
 import lombok.Data;
 
 @Data

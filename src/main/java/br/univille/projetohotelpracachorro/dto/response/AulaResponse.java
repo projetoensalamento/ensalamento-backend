@@ -1,4 +1,4 @@
-package br.univille.projetohotelpracachorro.dto;
+package br.univille.projetohotelpracachorro.dto.response;
 
 import br.univille.projetohotelpracachorro.entity.Aula;
 import lombok.AllArgsConstructor;

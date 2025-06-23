@@ -1,9 +1,9 @@
 package br.univille.projetohotelpracachorro.controller;
 
-import br.univille.projetohotelpracachorro.dto.ensalamento.MateriaRequest;
-import br.univille.projetohotelpracachorro.dto.ensalamento.MateriaResponse;
-import br.univille.projetohotelpracachorro.entity.ensalamento.Materia;
-import br.univille.projetohotelpracachorro.service.ensalamento.MateriaService;
+import br.univille.projetohotelpracachorro.dto.request.MateriaRequest;
+import br.univille.projetohotelpracachorro.dto.response.MateriaResponse;
+import br.univille.projetohotelpracachorro.entity.Materia;
+import br.univille.projetohotelpracachorro.service.MateriaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

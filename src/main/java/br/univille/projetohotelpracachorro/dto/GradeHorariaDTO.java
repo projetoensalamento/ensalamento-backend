@@ -13,4 +13,5 @@ public class GradeHorariaDTO {
     private DayOfWeek diaSemana;
     private AulaHorarioDTO horario1;
     private AulaHorarioDTO horario2;
+    private String nomeDiaSemana;
 }

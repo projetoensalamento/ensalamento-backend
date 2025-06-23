@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Turmas</title>
+  <link th:href="@{/css/turma/list.css}" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+  <h1 class="mb-4">Turmas</h1>
+
+  <hr>
+
+  <h2 class="mb-3">Lista de Turmas Cadastradas</h2>
+  <div th:if="${#lists.isEmpty(listaTurmas)}" class="alert alert-info" role="alert">
+    Nenhuma turma cadastrada.
+  </div>
+  <div th:unless="${#lists.isEmpty(listaTurmas)}">
+    <table class="table table-striped table-bordered">
+      <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Semestre</th> <th>Curso</th>
+        <th sec:authorize="hasRole('PROFESSOR')">Ações</th>
+        <th>Grade horária</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="turma : ${listaTurmas}">
+        <td th:text="${turma.id}"></td>
+        <td th:text="${turma.nome}"></td>
+        <td th:text="${turma.semestre}"></td>
+        <td th:text="${turma.getCursoSigla()}"></td>
+
+        <td sec:authorize="hasRole('PROFESSOR')">
+          <div class="btn-group" role="group">
+            <a th:href="@{/turmas/editar/{id}(id=${turma.id})}" class="btn btn-warning btn-sm" >Editar</a>
+            <!--<form th:action="@{/turmas/{id}(id=${turma.id})}" method="post" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir este professor?');">
+              <input type="hidden" name="_method" value="delete" />
+              <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+            </form>-->
+          </div>
+        </td>
+        <td>
+          <a th:href="@{/ensalamento/turma/{id}(id=${turma.id})}" class="btn btn-warning btn-sm">Ensalamento</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

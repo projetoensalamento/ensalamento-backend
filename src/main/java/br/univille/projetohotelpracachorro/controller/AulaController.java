@@ -1,7 +1,7 @@
 package br.univille.projetohotelpracachorro.controller;
 
-import br.univille.projetohotelpracachorro.dto.AulaRequest;
-import br.univille.projetohotelpracachorro.dto.AulaResponse;
+import br.univille.projetohotelpracachorro.dto.request.AulaRequest;
+import br.univille.projetohotelpracachorro.dto.response.AulaResponse;
 import br.univille.projetohotelpracachorro.entity.Aula;
 import br.univille.projetohotelpracachorro.service.AulaService;
 import lombok.RequiredArgsConstructor;

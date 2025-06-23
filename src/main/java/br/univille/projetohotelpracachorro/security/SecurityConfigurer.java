@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -24,44 +25,49 @@ public class SecurityConfigurer {
         // Usa o PasswordEncoderFactories para criar um delegating password encoder.
         // Isso é o padrão recomendado e mais seguro, pois permite diferentes tipos de codificação
         // e é compatível com senhas codificadas no passado.
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        return new BCryptPasswordEncoder();
     }
 
     // NOVO: Bean para usuários em memória para testes
     @Bean
-    public UserDetailsService users(PasswordEncoder passwordEncoder) { // Injeta o PasswordEncoder
-        UserDetails user = User.builder()
-                .username("usuario") // Seu nome de usuário de teste
-                .password(passwordEncoder.encode("senha")) // Sua senha de teste, codificada
-                .roles("USUARIO") // Papel(is) do usuário
+    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
+        // Usuário Professor
+        UserDetails professor = User.withUsername("professor")
+                .password(passwordEncoder.encode("123"))
+                .roles("PROFESSOR") // Role PROFESSOR
                 .build();
 
-        UserDetails admin = User.builder()
-                .username("admin") // Seu nome de usuário de teste para admin
-                .password(passwordEncoder.encode("admin")) // Sua senha de teste para admin, codificada
-                .roles("ADMIN", "USUARIO") // Papel(is) do admin
+        // Usuário Aluno
+        UserDetails aluno = User.withUsername("aluno")
+                .password(passwordEncoder.encode("123"))
+                .roles("ALUNO") // Role ALUNO
                 .build();
 
-        return new InMemoryUserDetailsManager(user, admin);
+        return new InMemoryUserDetailsManager(professor, aluno);
     }
 
-
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().permitAll()
-                        /*requestMatchers("/", "/resources/**", "/css/**", "/img/**", "/js/**", "/webjars/**", "/h2-console/**",
-                                "/login").permitAll()
-                        .anyRequest().authenticated()*/
+                        .requestMatchers("/css/**", "/js/**", "/images/**", "/my-login").permitAll() // Permite acesso público a estes recursos e à página de login
+                        .requestMatchers("/ensalamento/**").authenticated() // Ensalamento acessível para todos autenticados
+                        .requestMatchers("/ensalamento/editarAula/**", "/ensalamento/criarAula/**",
+                                "/ensalamento/salvarEdicaoAula/**", "/ensalamento/excluirAula/**",
+                                "/turmas").hasAnyRole("PROFESSOR", "ALUNO") // Apenas PROFESSOR pode editar/criar/excluir e ver a lista de turmas
+                        .anyRequest().authenticated() // Todas as outras requisições exigem autenticação
                 )
                 .formLogin(form -> form
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/professores", true)
-                        .permitAll()
+                        .loginPage("/login") // Define a página de login customizada
+                        .defaultSuccessUrl("/turmas", true) // Redireciona após login bem-sucedido (ex: para a primeira turma)
+                        .permitAll() // Permite acesso ao formulário de login para todos
                 )
-                .csrf(csrf -> csrf.disable()) // Desabilita CSRF (cuidado: pode ser um risco de segurança se não for justificado)
-                .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable())); // Desabilita X-Frame-Options (para H2-console)
+                .logout(logout -> logout
+                        .logoutUrl("/logout") // Define a URL de logout
+                        .logoutSuccessUrl("/login?logout") // Redireciona após logout bem-sucedido
+                        .permitAll() // Permite acesso à URL de logout para todos
+                )
+                .csrf(csrf -> csrf.disable()); // Desabilita CSRF para simplificar, mas HABILITE em produção!
 
         return http.build();
     }

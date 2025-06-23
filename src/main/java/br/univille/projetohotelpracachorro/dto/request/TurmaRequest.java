@@ -1,4 +1,4 @@
-package br.univille.projetohotelpracachorro.dto;
+package br.univille.projetohotelpracachorro.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;

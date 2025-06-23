@@ -1,6 +1,6 @@
-package br.univille.projetohotelpracachorro.dto;
+package br.univille.projetohotelpracachorro.dto.response;
 
-import br.univille.projetohotelpracachorro.entity.ensalamento.Turma;
+import br.univille.projetohotelpracachorro.entity.Turma;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

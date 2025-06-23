@@ -1,6 +1,6 @@
 package br.univille.projetohotelpracachorro.repository;
 
-import br.univille.projetohotelpracachorro.entity.ensalamento.Aula;
+import br.univille.projetohotelpracachorro.entity.Aula;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

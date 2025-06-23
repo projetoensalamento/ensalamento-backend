@@ -1,38 +1,17 @@
 package br.univille.projetohotelpracachorro;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import br.univille.projetohotelpracachorro.entity.Cachorro;
-import br.univille.projetohotelpracachorro.entity.Cliente;
-import br.univille.projetohotelpracachorro.entity.Funcionario;
-import br.univille.projetohotelpracachorro.entity.Papel;
-import br.univille.projetohotelpracachorro.entity.Servico;
-import br.univille.projetohotelpracachorro.entity.Usuario;
-
 @Component
 public class Startup {
-
-    @Autowired
-    private ServicoRepository servicoRepository;
-
-    @Autowired
-    private FuncionarioRepository funcionarioRepository;
-
-    @Autowired
-    private CachorroRepository cachorroRepository;
-
-    @Autowired
-    private UsuarioRepository usuarioRepository;
-    
     
     @EventListener
     public void onApplicationEvent(ContextRefreshedEvent event){
             
 
-            if(usuarioRepository.findByUsuario("admin") == null){
+            /*if(usuarioRepository.findByUsuario("admin") == null){
                 var adminUser = new Usuario();
                 adminUser.setUsuario("admin");
                 adminUser.setSenha("admin");
@@ -64,7 +43,7 @@ public class Startup {
                 adminUser.setNome("usuario");
                 adminUser.setSenha("usuario");
                 usuarioRepository.save(adminUser);
-            }*/
+            }
 
             
 
@@ -137,7 +116,7 @@ public class Startup {
 
                 cachorroRepository.save(cachorro);
                 
-            }
+            }*/
 
 
 

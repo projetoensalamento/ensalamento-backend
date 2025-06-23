@@ -1,7 +1,7 @@
 package br.univille.projetohotelpracachorro.service;
 
-import br.univille.projetohotelpracachorro.dto.AulaRequest;
-import br.univille.projetohotelpracachorro.dto.AulaResponse;
+import br.univille.projetohotelpracachorro.dto.request.AulaRequest;
+import br.univille.projetohotelpracachorro.dto.response.AulaResponse;
 import br.univille.projetohotelpracachorro.entity.*;
 import br.univille.projetohotelpracachorro.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -32,7 +33,43 @@ public class AulaService {
         }
 
         Aula aula = new Aula();
+        mapAulaRequestToAula(aulaRequest, aula);
+        return aulaRepository.save(aula);
+    }
 
+    public Aula atualizaAula(Long id, AulaRequest aulaRequest) {
+        Aula aulaExistente = aulaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Aula não encontrada com o ID: " + id));
+
+        mapAulaRequestToAula(aulaRequest, aulaExistente); // Atualiza os campos editáveis
+        return aulaRepository.save(aulaExistente);
+    }
+
+    public Aula findById(Long id) {
+        return aulaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Aula nao encontrada com este id"));
+    }
+
+
+
+
+    public List<AulaResponse> findAll(){
+        return aulaRepository.findAll()
+                .stream()
+                .map(AulaResponse::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<Aula> consultaAulasPorProfessor(Long id){
+        return aulaRepository.findAllByProfessor_Id(id);
+    }
+
+    public List<Aula> consultaAulasPorTurma(Long id){
+        return aulaRepository.findAllByTurma_Id(id);
+    }
+
+    // Método auxiliar para mapear AulaRequest para Aula (reutilizável para criar e atualizar)
+    private void mapAulaRequestToAula(AulaRequest aulaRequest, Aula aula) {
         DiaSemana diaSemana = diaSemanaRepository.findById(aulaRequest.getDiaSemanaId())
                 .orElseThrow(() -> new IllegalArgumentException("Erro procurando dia da semana"));
         aula.setDiaSemana(diaSemana);
@@ -53,23 +90,7 @@ public class AulaService {
                 .orElseThrow(() -> new IllegalArgumentException("Erro procurando turma"));
         aula.setTurma(turma);
 
-        return aulaRepository.save(aula);
-    }
-
-
-    public List<AulaResponse> findAll(){
-        return aulaRepository.findAll()
-                .stream()
-                .map(AulaResponse::new)
-                .toList();
-    }
-
-    public List<Aula> consultaAulasPorProfessor(Long id){
-        return aulaRepository.findAllByProfessor_Id(id);
-    }
-
-    public List<Aula> consultaAulasPorTurma(Long id){
-        return aulaRepository.findAllByTurma_Id(id);
+        aula.setSala(aulaRequest.getSala()); // <-- Adiciona a sala
     }
 
 }

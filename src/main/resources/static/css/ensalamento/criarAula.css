@@ -1,0 +1,75 @@
+
+/* Cores Verde Escuro - Reutilizadas do ensalamento.html */
+:root {
+    --primary-dark-green: #004d40;
+    --secondary-green: #26a69a;
+    --light-green: #4db6ac;
+    --text-light: #ffffff;
+    --text-dark: #333333;
+    --border-color: rgba(0, 0, 0, 0.1);
+}
+
+body {
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-dark);
+    background-color: #f4f7f6;
+}
+
+.container {
+    max-width: 600px;
+}
+
+h1, h2 {
+    color: var(--primary-dark-green);
+    margin-bottom: 25px;
+    text-align: center;
+}
+h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: var(--secondary-green);
+}
+
+/* Estilo do Card do Formulário */
+.form-card {
+    background-color: var(--text-light);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-top: 20px;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: var(--primary-dark-green);
+}
+.btn{
+    border-radius: 20px
+}
+
+/* Botões */
+.btn-primary {
+    background-color: var(--secondary-green);
+    border-color: var(--secondary-green);
+    color: var(--text-light);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.btn-primary:hover {
+    background-color: #208e82;
+    border-color: #208e82;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+/* Mensagens Flash */
+.alert {
+    margin-top: 20px;
+}

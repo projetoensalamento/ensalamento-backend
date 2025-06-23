@@ -1,52 +1,82 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
 <head>
     <meta charset="UTF-8">
-    <title>Grade Horária - [[${turma.nome}]]</title>
-    <head th:include="layout :: head"></head>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Ensalamento da Turma</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link th:href="@{/css/ensalamento/ensalamento.css}" rel="stylesheet" />
 </head>
 <body>
+<div class="container">
+    <h1 class="mb-4">Ensalamento da Turma: <span th:text="${turma.nome}"></span></h1>
 
-<h1 class="titulo-grade">Grade Horária da Turma <span th:text="${turma.nome}">Turma</span></h1>
-<div class="tabela-container">
-<table>
-    <thead>
-    <tr>
-        <th>Dia da Semana</th>
-        <th>1º Horário</th>
-        <th>2º Horário</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="linha : ${gradeHoraria}">
-        <td class="dia-semana">
-    <span th:switch="${linha.diaSemana}">
-        <span th:case="${T(java.time.DayOfWeek).MONDAY}">Segunda-feira</span>
-        <span th:case="${T(java.time.DayOfWeek).TUESDAY}">Terça-feira</span>
-        <span th:case="${T(java.time.DayOfWeek).WEDNESDAY}">Quarta-feira</span>
-        <span th:case="${T(java.time.DayOfWeek).THURSDAY}">Quinta-feira</span>
-        <span th:case="${T(java.time.DayOfWeek).FRIDAY}">Sexta-feira</span>
-        <span th:case="${T(java.time.DayOfWeek).SATURDAY}">Sábado</span>
-    </span>
-        </td>
+    <a th:href="@{/turmas}" class="btn btn-secondary mb-3" >Voltar para Turmas</a>
 
-        <td th:if="${linha.horario1 != null}">
-            <div><strong th:text="${linha.horario1.materia}">Matéria</strong></div>
-            <div th:text="${linha.horario1.professor}">Professor</div>
-            <div th:text="${linha.horario1.horario}">Horário</div>
-        </td>
-        <td th:if="${linha.horario1 == null}" class="vazio">Sem aula</td>
+    <div th:if="${mensagemSucesso}" class="alert alert-success" role="alert">
+        <span th:text="${mensagemSucesso}"></span>
+    </div>
+    <div th:if="${mensagemErro}" class="alert alert-danger" role="alert">
+        <span th:text="${mensagemErro}"></span>
+    </div>
 
-        <td th:if="${linha.horario2 != null}">
-            <div><strong th:text="${linha.horario2.materia}">Matéria</strong></div>
-            <div th:text="${linha.horario2.professor}">Professor</div>
-            <div th:text="${linha.horario2.horario}">Horário</div>
-        </td>
-        <td th:if="${linha.horario2 == null}" class="vazio">Sem aula</td>
-    </tr>
-    </tbody>
-</table>
+    <table class="table">
+        <thead>
+        <tr>
+            <th></th> <th th:each="linha : ${gradeHoraria}" th:text="${linha.nomeDiaSemana}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="horarioFixo : ${horariosFixos}">
+            <th th:text="${horarioFixo.horaInicio.format(T(java.time.format.DateTimeFormatter).ofPattern('HH:mm')) + ' - ' + horarioFixo.horaFim.format(T(java.time.format.DateTimeFormatter).ofPattern('HH:mm'))}"></th>
+
+            <td th:each="linha : ${gradeHoraria}">
+                <div class="slot-content">
+                    <div th:if="${horarioFixo.numero == 1}">
+                        <div th:if="${linha.horario1.temAula}" class="aula-info">
+                            <div class="info-line"><span class="label">Matéria:</span><span class="value" th:text="${linha.horario1.materia}"></span></div>
+                            <div class="info-line"><span class="label">Professor:</span><span class="value" th:text="${linha.horario1.professor}"></span></div>
+                            <div class="info-line"><span class="label">Sala:</span><span class="value" th:text="${linha.horario1.sala}"></span></div>
+                        </div>
+                        <div th:unless="${linha.horario1.temAula}" class="empty-slot-content">
+                            <span>Vazio</span>
+                        </div>
+                        <div class="action-buttons" sec:authorize="hasRole('PROFESSOR')">
+                            <a th:if="${linha.horario1.temAula}" th:href="@{/ensalamento/editarAula/__${linha.horario1.aulaId}__}" class="btn btn-sm btn-info">Editar</a>
+                            <!--<form th:if="${linha.horario1.temAula}" th:action="@{/ensalamento/excluirAula/__${linha.horario1.aulaId}__/__${turma.id}__}" method="post" style="display:inline-block;">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta aula?');">Excluir</button>
+                            </form>-->
+                            <a th:unless="${linha.horario1.temAula}" th:href="@{/ensalamento/criarAula/__${turma.id}__/__${linha.diaSemana.ordinal() + 1}__/__${horarioFixo.id}__}" class="btn btn-sm btn-success">Adicionar</a>
+                        </div>
+                    </div>
+
+                    <div th:if="${horarioFixo.numero == 2}">
+                        <div th:if="${linha.horario2.temAula}" class="aula-info">
+                            <div class="info-line"><span class="label">Matéria:</span><span class="value" th:text="${linha.horario2.materia}"></span></div>
+                            <div class="info-line"><span class="label">Professor:</span><span class="value" th:text="${linha.horario2.professor}"></span></div>
+                            <div class="info-line"><span class="label">Sala:</span><span class="value" th:text="${linha.horario2.sala}"></span></div>
+                        </div>
+                        <div th:unless="${linha.horario2.temAula}" class="empty-slot-content">
+                            <span>Vazio</span>
+                        </div>
+                        <div class="action-buttons" sec:authorize="hasRole('PROFESSOR')">
+                            <a th:if="${linha.horario2.temAula}" th:href="@{/ensalamento/editarAula/__${linha.horario2.aulaId}__}" class="btn btn-sm btn-info">Editar</a>
+                            <!--<form th:if="${linha.horario2.temAula}" th:action="@{/ensalamento/excluirAula/__${linha.horario2.aulaId}__/__${turma.id}__}" method="post" style="display:inline-block;">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta aula?');">Excluir</button>
+                            </form>-->
+                            <a th:unless="${linha.horario2.temAula}" th:href="@{/ensalamento/criarAula/__${turma.id}__/__${linha.diaSemana.ordinal() + 1}__/__${horarioFixo.id}__}" class="btn btn-sm btn-success">Adicionar</a>
+                        </div>
+                    </div>
+
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

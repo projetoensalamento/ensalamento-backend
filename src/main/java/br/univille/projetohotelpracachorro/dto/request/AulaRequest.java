@@ -1,4 +1,4 @@
-package br.univille.projetohotelpracachorro.dto;
+package br.univille.projetohotelpracachorro.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,4 +14,5 @@ public class AulaRequest {
     private Long horarioId;
     private String diaSemana;  // Ex: "SEGUNDA"
     private Integer horario;
+    private String sala;
 }
